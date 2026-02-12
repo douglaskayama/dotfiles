@@ -26,6 +26,8 @@
     quotepath    = false
 	eol = lf
 	autocrlf = input
+	fsmonitor = true
+	untrackedCache = true
 [alias]
     # workflow
     up = !git pull --rebase --prune $@ && git submodule update --init --recursive
@@ -167,6 +169,7 @@
     verbosity = 1
     prompt    = false
 	tool = vscode
+	conflictstyle = zdiff3
     #tool      = Kaleidoscope
     #tool     = mvimdiff
     #tool     = sourcetree
@@ -189,14 +192,19 @@
 [push]
   # 'git push' will push the current branch to its tracking branch
   # the usual default is to push all branches
-    default = tracking
+	default = simple
+	autoSetupRemote = true
+	followTags = true
 #[advice]
 #  statusHints = false
 [diff]
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
   # instead of a/b/c/d as prefixes for patches
-    mnemonicprefix = true
-	tool = vscode
+	mnemonicPrefix = true
+	algorithm = histogram
+	colorMoved = plain
+	renames = true
+#	tool = vscode
 [difftool]
     prompt = false
 [difftool "Kaleidoscope"]
@@ -207,19 +215,21 @@
 [rerere]
   # Remember my merges
   # http://gitfu.wordpress.com/2008/04/20/git-rerere-rereremember-what-you-did-last-time/
-    enabled = true
+	enabled = true
+	autoupdate = true
 [interactive]
     singlekey = true
 [achievement]
     upload = true
 [user]
-    name = Douglas Kayama
-    email = self@douglasdrumond.tech
+	name = Douglas Kayama
+	email = douglas@kayama.tech
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGV8PW5qQ5LEUjUwrb0fgTRaDnJZ41B8g9sy7vNki60n
 [grep]
     extendRegexp = true
     lineNumber = true
 [github]
-    user = douglasdrumond
+    user = douglaskayama
 #[filter "media"]
 #    clean = git-media-clean %f
 #    smudge = git-media-smudge %f
@@ -227,3 +237,35 @@
 	cmd = "code --wait --diff  "
 [mergetool "vscode"]
 	cmd = "code --wait "
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+	verbose = true
+[init]
+	defaultBranch = main
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[help]
+	autocorrect = prompt
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[pull]
+	rebase = true

@@ -76,7 +76,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-vi-mode git)
+plugins=(zsh-vi-mode git z)
 #plugins=(vi-mode git)
 
 source $ZSH/oh-my-zsh.sh
@@ -141,27 +141,58 @@ export PATH="$HOME/.rvm/bin:$PATH"
 
 export PATH="$PATH:/usr/local/go/bin"
 
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# append completions to fpath
+fpath=(${ASDF_DATA_DIR:-$HOME/.asdf}/completions $fpath)
+# initialise completions with ZSH's compinit
+autoload -Uz compinit && compinit
+
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/douglaskayama/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-# eval $(thefuck --alias)
+eval $(thefuck --alias)
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/douglaskayama/Applications/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/Users/douglaskayama/.asdf/installs/python/anaconda3-2023.03/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/douglaskayama/Applications/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/douglaskayama/Applications/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/Users/douglaskayama/.asdf/installs/python/anaconda3-2023.03/etc/profile.d/conda.sh" ]; then
+        . "/Users/douglaskayama/.asdf/installs/python/anaconda3-2023.03/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/douglaskayama/Applications/miniconda3/bin:$PATH"
+        export PATH="/Users/douglaskayama/.asdf/installs/python/anaconda3-2023.03/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+export PATH="/Library/Java/JavaVirtualMachines/liberica-jdk-11-full.jdk/Contents/Home/bin:$PATH"
+
+export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
+export PATH="/Users/douglaskayama/.config/emacs/bin:$PATH"
+
+alias lzvim="NVIM_APPNAME=lazyvim nvim"
+alias vi=nvim
+
+# Added by Windsurf
+export PATH="/Users/douglaskayama/.codeium/windsurf/bin:$PATH"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/Users/douglaskayama/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
+
+[ -f "/Users/douglaskayama/.ghcup/env" ] && . "/Users/douglaskayama/.ghcup/env" # ghcup-env
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
